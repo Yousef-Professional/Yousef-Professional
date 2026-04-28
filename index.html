@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ELITE | منصة النخبة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --neon: #00f2ff; --glass: rgba(15, 23, 42, 0.7); }
+        body {
+            margin: 0; background: #020617; color: white;
+            font-family: 'Segoe UI', sans-serif; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden; perspective: 1000px;
+        }
+        #particles-js { position: absolute; width: 100%; height: 100%; z-index: 1; }
+
+        .glass-card {
+            position: relative; z-index: 10;
+            background: var(--glass);
+            padding: 30px; border-radius: 40px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            width: 380px; text-align: center;
+            backdrop-filter: blur(20px);
+            transform-style: preserve-3d;
+            transition: 0.1s;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--neon);
+            padding: 5px 15px; border-radius: 20px; cursor: pointer; float: left; font-size: 12px;
+        }
+
+        h1 {
+            font-size: 32px; color: var(--neon);
+            text-transform: uppercase; letter-spacing: 5px;
+            text-shadow: 0 0 10px var(--neon);
+            margin: 10px 0;
+        }
+
+        .order-box input, .order-box select, .order-box textarea {
+            width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: white; outline: none; font-family: 'Segoe UI';
+        }
+
+        .neon-btn {
+            width: 100%; padding: 15px; margin-top: 15px; border-radius: 15px;
+            border: none; background: var(--neon); color: #000;
+            font-weight: bold; font-size: 18px; cursor: pointer;
+            box-shadow: 0 0 15px var(--neon); transition: 0.3s;
+        }
+        .neon-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--neon); }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <div class="glass-card" id="card">
+        <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">English</button>
+        <div style="clear: both;"></div>
+        
+        <i class="fas fa-crown" style="font-size: 40px; color: #fbbf24; margin-top: 10px;"></i>
+        <h1 id="title">THE ELITE</h1>
+        <p id="subtitle" style="color: #94a3b8; font-size: 14px;">نحول أفكارك الكبيرة إلى واقع رقمي مبهر 🚀</p>
+
+        <div class="order-box">
+            <input type="text" id="userName" placeholder="اسمك الكريم">
+            
+            <select id="serviceType">
+                <option value="برمجة موقع">طلب برمجة موقع 💻</option>
+                <option value="تصميم جرافيك">تصميم جرافيك 🎨</option>
+                <option value="استشارة تقنية">استشارة تقنية 💡</option>
+            </select>
+
+            <textarea id="projectDetails" placeholder="ما هي فكرتك الضخمة؟" rows="2"></textarea>
+            
+            <button class="neon-btn" onclick="sendToWhatsApp()">
+                 <span id="btnText">إرسال الطلب للنخبة</span> 🚀
+            </button>
+        </div>
+        <p style="margin-top: 15px; font-size: 9px; color: #475569;">ENCRYPTED BY THE ELITE PROTOCOL</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100 },
+                "color": { "value": "#00f2ff" },
+                "line_linked": { "enable": true, "color": "#00f2ff", "opacity": 0.2 }
+            }
+        });
+
+        const card = document.getElementById('card');
+        document.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        let currentLang = 'ar';
+        function toggleLanguage() {
+            const isAr = currentLang === 'ar';
+            document.documentElement.dir = isAr ? 'ltr' : 'rtl';
+            document.getElementById('subtitle').innerText = isAr ? "Turning big ideas into digital reality 🚀" : "نحول أفكارك الكبيرة إلى واقع رقمي مبهر 🚀";
+            document.getElementById('userName').placeholder = isAr ? "Your Name" : "اسمك الكريم";
+            document.getElementById('projectDetails').placeholder = isAr ? "Describe your idea..." : "ما هي فكرتك الضخمة؟";
+            document.getElementById('btnText').innerText = isAr ? "Send to THE ELITE" : "إرسال الطلب للنخبة";
+            document.getElementById('langBtn').innerText = isAr ? "العربية" : "English";
+            currentLang = isAr ? 'en' : 'ar';
+        }
+
+        function sendToWhatsApp() {
+            let name = document.getElementById('userName').value;
+            let service = document.getElementById('serviceType').value;
+            let details = document.getElementById('projectDetails').value;
+            if(!name || !details) { 
+                alert(currentLang === 'ar' ? "أكمل البيانات يا بطل!" : "Please fill in your details!"); 
+                return; 
+            }
+            window.open(`https://wa.me/967772307954?text=Order for: ${service}%0AName: ${name}%0ADetails: ${details}`);
+        }
+    </script>
+</body>
+</html>
